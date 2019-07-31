@@ -1,5 +1,28 @@
 {% extends 'templates/base.html' %}
 
 {% block main %}
+<div class="row">
+    <!-- Feed -->
+    <div class="col-9">
+        <h3>@{{user.username}}</h3>
 
+        {% if user.gotweets.all %}
+        {% for gotweet in user.gotweets.all %}
+            <div class="card" style="margin-bottom: 20px;">
+                <div class="card-body">
+                    <h5 class="card-title">@{{gotweet.user.username}}</h5>
+                    <p class="card-text"><b>{{gotweet.created_at}},  {{gotweet.location}}</b> - {{gotweet.body}}</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No gotweets yet...</p>
+        {% endif %}
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-3">
+        <h3>Add Gotweet</h3>
+    </div>
+</div>
 {% endblock %}

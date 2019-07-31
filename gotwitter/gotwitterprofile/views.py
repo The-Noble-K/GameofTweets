@@ -36,4 +36,8 @@ def signout(request):
     logout(request)
     return redirect('/')
 
+def profile(request, username):
+    user = User.objects.get(username=username)
+    return render(request, 'profile.html', {'user': user})
+
 
