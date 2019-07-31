@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from gotwitterprofile.forms import SignupForm, SigninForm
@@ -58,4 +59,32 @@ def profile(request, username):
         return render(request, 'profile.html', {'form': form, 'user': user})
     else:
         return redirect('/')
+
+
+def follows(request, username):
+    user = User.objects.get(username=username)
+    gotwitterprofiles = user.gotwitterprofile.follows
+
+    return render(request, 'users.html', {'title': 'Follows', 'gotwitterprofiles': gotwitterprofiles})
+
+
+def followers(request, username):
+    user = User.objects.get(username=username)
+    gotwitterprofiles = user.gotwitterprofile.followed_by
+
+    return render(request, 'users.html', {'title': 'Followers', 'gotwitterprofiles': gotwitterprofiles})
+
+@login_required
+def follow(request, username):
+    user = User.objects.get(username=username)
+    request.user.gotwitterprofile.follows.add(user.gotwitterprofile)
+
+    return redirect('/' + user.username + '/')
+
+@login_required
+def stopfollow(request, username):
+    user = User.objects.get(username=username)
+    request.user.gotwitterprofile.follows.delete(user.gotwitterprofile)
+
+    return redirect('/' + user.username + '/')
 

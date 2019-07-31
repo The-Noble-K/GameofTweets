@@ -6,6 +6,23 @@
     <div class="col-9">
         <h3>@{{user.username}}</h3>
 
+        <hr>
+
+        <b><a href="/{{user.username}}/follows/">Follows:</a></b> {{user.gotwitterprofile.follows.count}} -
+        <b><a href="/{{user.username}}/followers/">Followers:</a></b> {{user.gotwitterprofile.followed_by.count}}
+
+        {% ifnotequal request.user user %}
+            <hr>
+
+            {% if request.user.gotwitterprofile in user.gotwitterprofile.followed_by.all %}
+                <a href="/{{user.username}}/stopfollow/" class="btn btn-danger">Stop Following</a>
+            {% else %}
+                <a href="/{{user.username}}/follow/" class="btn btn-success">Follow</a>
+            {% endif %}
+        {% endifnotequal %}
+
+        <hr>
+
         {% if user.gotweets.all %}
         {% for gotweet in user.gotweets.all %}
             <div class="card" style="margin-bottom: 20px;">
