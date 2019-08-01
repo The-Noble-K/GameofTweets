@@ -92,3 +92,10 @@ def stopfollow(request, username):
 
     return redirect('/' + user.username + '/')
 
+@login_required
+def users(request, username):
+    users = User.objects.all()
+
+    return render(request, 'users.html', {'title': 'Follows', 'gotwitterprofiles': gotwitterprofiles})
+
+    
