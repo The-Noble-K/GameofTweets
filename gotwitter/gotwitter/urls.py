@@ -16,13 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from gotweet.views import feed
-from gotwitterprofile.views import frontpage, signout, profile, follows, followers, follow, stopfollow
+from gotwitterprofile.views import frontpage, signout, profile, follows, followers, follow, stopfollow, users
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', frontpage, name='frontpage'),
     path('feed/', feed, name='feed'),
     path('signout/', signout, name='signout'),
+    path('users/', users, name="users"),
     path('<str:username>/follows/', follows, name='follows'),
     path('<str:username>/followers/', followers, name='followers'),
     path('<str:username>/follow/', follow, name='follow'),
