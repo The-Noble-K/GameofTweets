@@ -3,7 +3,7 @@ from gotweet.models import Gotweet
 
 def feed(request):
     userids = []
-    for id in request.user.gotwitterprofile.follow.all():
+    for id in request.user.gotwitterprofile.follows.all():
         userids.append(id)
 
     userids.append(request.user.id)
